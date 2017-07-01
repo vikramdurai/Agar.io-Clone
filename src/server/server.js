@@ -413,31 +413,28 @@ io.on('connection', function (socket) {
 
     socket.on('1', function() {
         // Fire food.
-        for(var i=0; i<currentPlayer.cells.length; i++)
-        {
-            if(((currentPlayer.cells[i].mass >= c.defaultPlayerMass + c.fireFood) && c.fireFood > 0) || (currentPlayer.cells[i].mass >= 20 && c.fireFood === 0)){
-                var masa = 1;
-                if(c.fireFood > 0)
-                    masa = c.fireFood;
-                else
-                    masa = currentPlayer.cells[i].mass*0.1;
-                currentPlayer.cells[i].mass -= masa;
-                currentPlayer.massTotal -=masa;
-                massFood.push({
-                    id: currentPlayer.id,
-                    num: i,
-                    masa: masa,
-                    hue: currentPlayer.hue,
-                    target: {
-                        x: currentPlayer.x - currentPlayer.cells[i].x + currentPlayer.target.x,
-                        y: currentPlayer.y - currentPlayer.cells[i].y + currentPlayer.target.y
-                    },
-                    x: currentPlayer.cells[i].x,
-                    y: currentPlayer.cells[i].y,
-                    radius: util.massToRadius(masa),
-                    speed: 25
-                });
-            }
+        for(var i = 0; i < currentPlayer.cells.length; i++) {
+            var masa = 1;
+            if (c.fireFood > 0)
+               masa = c.fireFood;
+            else
+               masa = currentPlayer.cells[i].mass*0.1;
+            currentPlayer.cells[i].mass -= masa;
+            currentPlayer.massTotal -=masa;
+            massFood.push({
+                id: currentPlayer.id,
+                num: i,
+                masa: masa,
+                hue: currentPlayer.hue,
+                target: {
+                    x: currentPlayer.x - currentPlayer.cells[i].x + currentPlayer.target.x,
+                    y: currentPlayer.y - currentPlayer.cells[i].y + currentPlayer.target.y
+                 },
+                 x: currentPlayer.cells[i].x,
+                 y: currentPlayer.cells[i].y,
+                 radius: util.massToRadius(masa),
+                 speed: 25
+            });
         }
     });
     socket.on('2', function(virusCell) {
